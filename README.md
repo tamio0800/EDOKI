@@ -1,0 +1,2 @@
+# EDOKI
+Edony's Wiki
