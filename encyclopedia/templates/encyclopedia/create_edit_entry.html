@@ -1,5 +1,5 @@
 {% extends "encyclopedia/layout.html" %}
-{% block title %} Encyclopedia {% endblock title %}
+{% block title %} Edoki {% endblock title %}
 {% block body_content %}
 
 <section class="editor-main">
@@ -22,9 +22,9 @@
 						<div class="form-group pt-3">
 							<label class="entry-label" for="title">
 								{% if config and config == "create" %}
-								Create a title
+								新增標題
 								{% else %}
-								Edit title
+								編輯標題
 								{% endif %}
 							</label><br />
 							<div class="entry-title d-flex align-middle align-items-center">
@@ -37,9 +37,9 @@
 						<div class="form-group my-4 my-md-2">
 							<label class="entry-label" for="content">
 								{% if config and config == "create" %}
-								Create content
+								新增內容
 								{% else %}
-								Edit content
+								編輯內容
 								{% endif %}
 							</label><br />
 							<textarea class="px-2 shadow-sm  my-2" style="height: auto" name="content" id="content" rows="10"
@@ -54,14 +54,14 @@
 								<li class="nav-item">
 									<button id="submit_btn" class="mx-2 btn px-4 btn-outline-success" name="submit" value="create"
 										type=submit disabled>
-										Create
+										確定新增
 									</button>
 								</li>
 
 								<!--Creation Cancel-->
 								<li class="nav-item">
 									<button class="mx-2 btn px-4 btn-outline-warning" type="submit">
-										Cancel
+										取消
 									</button>
 								</li>
 								{% else %}
@@ -69,12 +69,12 @@
 								<!--Update Submit-->
 								<button id="submit_btn" type="submit" class="mx-2 btn px-4 btn-outline-primary" name="submit"
 									value="update" disabled>
-									Update
+									更新
 								</button>
 								<!--Update Cancel-->
 								<li class="nav-item">
 									<button class="mx-2 btn px-4 btn-outline-warning" type="submit">
-										Cancel
+										取消
 									</button>
 								</li>
 								{% endif %}

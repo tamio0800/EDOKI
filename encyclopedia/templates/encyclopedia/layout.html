@@ -32,11 +32,10 @@
 				<div id="logo_wiki" class="navbar-brand">
 					<a class=" wiki-home text-dark text-decoration-none" href="{% url 'index' %}">
 						<figure class="figure text-center">
-							<img
-								src="https://user-images.githubusercontent.com/54720725/97774007-c1dd1500-1b2a-11eb-98a4-a05ae60f3cba.png"
-								alt="wiki image logo" class="logo_img figure-img img-fluid rounded">
+							
+							<img src="{% static 'website_pictures/lizard2.jpg' %}" alt="Edoki Logo" class="logo_img figure-img img-fluid rounded" />
 							<figcaption class="figure-caption font-weight-bold text-center">
-								<h4 class="ff_wiki figure_text">Wiki</h4>
+								<h4 class="figure_text">Edoki</h4>
 							</figcaption>
 						</figure>
 					</a>
@@ -63,7 +62,7 @@
 										</div>
 									</div>
 									<!--Search bar-->
-									<input type="text" class="search form-control" list="wiki-list" placeholder="Search Encyclopedia"
+									<input type="text" class="search form-control" list="wiki-list" placeholder="搜尋內容"
 										name="search" aria-label="entry search bar">
 									<datalist id="wiki-list">
 										{% for entry in entries_options %}
@@ -74,10 +73,10 @@
 							</form>
 						</li>
 						<ul id="alt_nav_list" class="nav-list d-flex flex-row flex-md-column justify-content-around">
-							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'index' %}">Home</a></li>
-							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'create_update' %}">Create New Page</a>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'index' %}">首頁</a></li>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'create_update' %}">新增條目</a>
 							</li>
-							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'random_entry' %}">Random Page</a></li>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'random_entry' %}">隨便瞧瞧</a></li>
 						</ul>
 					</ul>
 			</nav>

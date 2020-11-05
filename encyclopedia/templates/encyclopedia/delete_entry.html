@@ -1,6 +1,6 @@
 {% extends "encyclopedia/layout.html" %}
 {% block title %}
-Delete Entry
+刪除條目
 {% endblock title %}
 
 {% block body_content %}
@@ -9,13 +9,13 @@ Delete Entry
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header bg-danger">
-        <h2 class="font-weight-bolder text-center w-100  modal-title" id="deletion_modal_label">Delete Entry</h2>
+        <h2 class="font-weight-bolder text-center w-100  modal-title" id="deletion_modal_label">刪除條目</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body text-center">
-        <h3 class="text-secondary"> Are you sure you want to delete </h3>
+        <h3 class="text-secondary"> 即將刪除： </h3>
         <h2 class="mt-3">{{title|title}}</h2>
       </div>
       <div class="modal-footer">
@@ -24,13 +24,13 @@ Delete Entry
         {% url 'delete_entry' title=entry_name deletion='cancel' as cancel %}
         <a href="{{cancel}}">
           <button class="btn btn-secondary font-weight-bold">
-            cancel
+            取消
           </button>
         </a>
         {% url 'delete_entry' title=entry_name deletion='delete' as delete %}
         <a href="{{delete}}">
           <button class="btn btn-danger font-weight-bold">
-            yes, delete it
+            確認刪除
           </button>
           {% endwith %}
 

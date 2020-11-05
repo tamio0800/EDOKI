@@ -1,8 +1,8 @@
 {% extends "encyclopedia/layout.html" %}
-{% block title %} Encyclopedia {% endblock %}
+{% block title %} Edoki {% endblock %}
 {% block body_content %}
 
-<section id="base_entry_section">
+<section id="base_entry_section" >
 
 	<!-- Navigation control-->
 	<div id="entry_navbar" class="navigation header  align-items-center d-flex ">
@@ -11,21 +11,21 @@
 			<li class="nav-item">
 				<a class="link" href="{% url 'index' %}">
 					<button class="mx-2 btn px-4 btn-outline-success">
-						Home
+						回到首頁
 					</button>
 				</a>
 			</li>
 			<!-- Edit Entry-->
 			<li class="nav-item">
 				<a class="link desk-ct-after" href="{% url 'create_update' title %}">
-					<button class="btn btn-outline-warning">Edit</button>
+					<button class="btn btn-outline-warning">編輯條目</button>
 				</a>
 			</li>
 			<!-- Delete Entry-->
 			{% if debug %}
 			<li class="nav-item">
 				<a class="link desk-ct-after" href="{% url 'delete_entry' title %}">
-					<button id="delete_btn" class="btn btn-outline-danger">Delete</button>
+					<button id="delete_btn" class="btn btn-outline-danger">刪除條目</button>
 				</a>
 				{% verbatim  %}
 				<script>

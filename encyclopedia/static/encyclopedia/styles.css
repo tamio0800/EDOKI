@@ -180,7 +180,7 @@ ul li {
 /*  TABLET AND DESKTOP BREAKPOINT */
 @media screen and (min-width: 426px) {
 	.desk-ct-after button::after{
-		content:"Entry";
+		/*content:"條目";*/
 		margin-left: 5px;
 	}
 }
@@ -270,7 +270,7 @@ ul li {
 		}
 		
 		#wiki_search_btn::before{
-			content: "Entry";
+			content: "";
 		}
 		.wiki_links{
 			display: flex;

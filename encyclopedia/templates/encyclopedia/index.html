@@ -1,14 +1,14 @@
 {% extends "encyclopedia/layout.html" %}
-{% block title %} Encyclopedia {% endblock %}
+{% block title %} Edoki {% endblock %}
 {% block body_content %}
-<section id="index_section" class="bg-light border-left mt-n3">
+<section id="index_section" class="bg-light border-left mt-n3" style="font-family:Microsoft JhengHei;">
 	<hr class="my-0">
 	<div class="greeting-header text-center">
-		<h1 class="ff_wiki font-weight-bolder text-dark">Welcome To Wiki</h1>
-		<p>The free encyclopedia that anyone can edit. </p>
+		<h1 class="font-weight-bolder text-dark" >Edoki: Edony's Wiki</h1>
+		<p>以後就可以在這邊統整資訊了Y(^___^)Y</p>
 	</div>
 	<div class="start-page px-3 bg-white pt-2">
-		<h2>Wiki Pages</h2>
+		<h2>Edoki Pages</h2>
 		<div id="az_list" class="wiki-link-container">
 			<form id="alphabet_form" action="" method="POST">
 				{% csrf_token %}
@@ -58,7 +58,7 @@
 				alt="loading-spinner" class="d-block  w-25 mw-25 mh-25">
 		</div>
 		<div class="entry-content">
-			<h5 class="font-weight-bold">Available Entry -
+			<h5 class="font-weight-bold">開放條目 -
 				<span class="badge badge-secondary px-2">{{entries|length}}</s>
 			</h5>
 			<ul>
@@ -69,7 +69,7 @@
 				</li>
 				{% empty %}
 				<li>
-					<h1 class="text-secondary text-centered "> No entry was found</h1>
+					<h1 class="text-secondary text-centered "> 找不到條目唷:(</h1>
 				</li>
 				{% endfor %}
 			</ul>
