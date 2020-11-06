@@ -9,6 +9,8 @@ from django.urls import reverse
 from functools import wraps
 from . import util
 from django.contrib.auth.decorators import login_required
+import datetime
+from encyclopedia.models import entry_profile, entry_edited_log
 
 def get_username(a_request_obj):
     username = None
@@ -96,6 +98,25 @@ def wiki_entry(request, title):
     context["title"] = title
     context["entry"] = markdown2.markdown(entry).strip()
     context["username"] = username
+    post_by = username
+    post_time = str(datetime.datetime.now()).split('.')[0]
+    
+    entry_logs = list()
+    entry_profile_query = entry_profile.objects.filter(title=title).first()
+    autor = entry_profile_query.author
+    editor_and_time_lists = entry_edited_log.objects.filter(entry_profile_id=entry_profile_query.id).order_by('-edited_time').values_list('edited_by', 'edited_time')
+    if len(editor_and_time_lists) > 0:
+        for each_editor_and_time_list in editor_and_time_lists:
+            editor, edited_time = each_editor_and_time_list[0], str(each_editor_and_time_list[1] + datetime.timedelta(hours=8)).split('.')[0].replace('-', '.')
+            entry_logs.append('edited by ' + editor + '@' + edited_time)
+    entry_logs.append('created by ' + autor + '@' + str(entry_profile_query.created_time + datetime.timedelta(hours=8)).split('.')[0].replace('-', '.'))
+
+    context["entry_logs"] = entry_logs
+
+    entry_profile_query = entry_profile.objects.filter(title=title).first()
+    setattr(entry_profile_query, 'read_times', entry_profile_query.read_times + 1)
+    entry_profile_query.save()
+
     return render(request, "encyclopedia/base_entry.html", context)
 
 @login_required(login_url='account/login/')
@@ -162,10 +183,28 @@ def create_update(request, title=""):
         if action == "updated":
             # delete previous entry
             util.delete_entry(previous_title)
+            # 找到原始的文章id
+            entry_info_query = entry_profile.objects.filter(title=previous_title).first()
+            entry_edited_log.objects.create(
+                entry_profile_id = entry_info_query.id,
+                edited_by = author,
+                previous_title = previous_title,
+                current_title = title,
+                previous_content = entry_info_query.content,
+                current_content = content,
+            ).save()
+            setattr(entry_info_query, 'title', title)
+            setattr(entry_info_query, 'content', content)
+            entry_info_query.save()
+        else:
+            # 新建條目
+            entry_profile.objects.create(
+                title = title,
+                content = content,
+                author = author,
+            ).save()
         messages.success(request, f" Your entry was {action} successfully!")
-
-        # 在這裡新增作者與時間的機制
-
+        
 
         return saveHandler(request, title=title, content=content)
 

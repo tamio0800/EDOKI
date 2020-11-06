@@ -1,4 +1,3 @@
-by Tamio@2020.07.07
 ###環境設定(Windows & Mac)
 
 1.   Windows到這裡下載/安裝MySQL Installer  >>  <https://dev.mysql.com/downloads/installer/>，可以不用註冊oracle會員，選擇下面的「**No thanks, just start my download.**」就好了。

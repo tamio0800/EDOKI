@@ -55,8 +55,9 @@
 
 	<!-- Entry Info -->
 	<div id="entry_info">
-		<a style="color: rgb(3, 95, 95); font-weight: bold;">by  {{post_by}}</a><br>
-		<a style="color: rgb(3, 95, 95); font-weight: bold;">@  {{post_time}}</a>
+		{% for entry_log in entry_logs %}
+			<a style="color: rgb(3, 95, 95); font-weight:normal;">{{entry_log}}</a><br>
+		{% endfor %}
 	</div>
 	<br><br>
 </section>
