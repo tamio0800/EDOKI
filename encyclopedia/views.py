@@ -8,8 +8,15 @@ from django.contrib import messages
 from django.urls import reverse
 from functools import wraps
 from . import util
+from django.contrib.auth.decorators import login_required
 
+def get_username(a_request_obj):
+    username = None
+    if a_request_obj.user.is_authenticated:
+        username = a_request_obj.user.username
+    return username
 
+@login_required(login_url='account/login/')
 def render(req, url, extra={}):
     """
     Hooking into render functionality and dynamically
@@ -22,7 +29,7 @@ def render(req, url, extra={}):
 
     return _render(req, url, extra)
 
-
+@login_required(login_url='account/login/')
 def referred_message(req, url, msg, level="success"):
     """Handle referred message  when a view is redirect
 
@@ -39,8 +46,11 @@ def referred_message(req, url, msg, level="success"):
         if msg_type:
             msg_type(req, msg)
 
-
+@login_required(login_url='account/login/')
 def index(request):
+    username = get_username(request)
+    if request.META.get('PATH_INFO', None) == '/':
+        return redirect('index')
     entry_list = util.list_entries()
     if request.method == "POST":
         letter = request.POST.get("letter")
@@ -64,13 +74,13 @@ def index(request):
             entry_list = list(
                 filter(lambda x: x.lower().startswith(letter), entry_list)
             )
-
-    context = {"entries": entry_list}
+    context = {"entries": entry_list, 'username': username}
     return render(request, "encyclopedia/index.html", context)
 
-
+@login_required(login_url='account/login/')
 def wiki_entry(request, title):
     """ Base wiki view to view all available entries"""
+    username = get_username(request)
     context = {}
     entry_list = util.list_entries()
 
@@ -85,9 +95,10 @@ def wiki_entry(request, title):
     entry = util.get_entry(wiki[0])
     context["title"] = title
     context["entry"] = markdown2.markdown(entry).strip()
+    context["username"] = username
     return render(request, "encyclopedia/base_entry.html", context)
 
-
+@login_required(login_url='account/login/')
 def saveHandler(request, **kwargs):
     """Save Entry
 
@@ -107,8 +118,9 @@ def saveHandler(request, **kwargs):
         return redirect("wiki_entry", title=title)
     return redirect(notFound)
 
-
+@login_required(login_url='account/login/')
 def create_update(request, title=""):
+    username = get_username(request)
     """Creates or updates wiki entry
 
     Arguments:
@@ -126,6 +138,7 @@ def create_update(request, title=""):
         content = request.POST.get("content", "").strip()
         submit = request.POST.get("submit")
         hidden = request.POST.get("config")
+        author = get_username(request)
 
         if submit is None:
             # User cancelled request
@@ -150,10 +163,15 @@ def create_update(request, title=""):
             # delete previous entry
             util.delete_entry(previous_title)
         messages.success(request, f" Your entry was {action} successfully!")
+
+        # 在這裡新增作者與時間的機制
+
+
         return saveHandler(request, title=title, content=content)
 
     else:  # GET Request
         context = {"config": "create"}  # default value
+        context["username"] = username
         if title:
             entry = util.get_entry(title)
             if not entry or entry is None:
@@ -170,8 +188,9 @@ def create_update(request, title=""):
         )
     return render(request, "encyclopedia/create_edit_entry.html", context)
 
-
+@login_required(login_url='account/login/')
 def random_entry(request):
+    username = get_username(request)
     """Random Wiki entry
 
     Arguments:
@@ -189,8 +208,9 @@ def random_entry(request):
     messages.error(request, f"Opp... Something went wrong!")
     return redirect(index)
 
-
+@login_required(login_url='account/login/')
 def delete_entry(request, title, deletion=None):
+    username = get_username(request)
     """Delete Wiki entry
 
     Arguments:
@@ -201,7 +221,7 @@ def delete_entry(request, title, deletion=None):
         [Django view] -- rendered view template   'delete-entry/'
     """
 
-    context = {}
+    context = {"username": username}
     if deletion:
         if title:
             if deletion == "delete":
@@ -215,10 +235,12 @@ def delete_entry(request, title, deletion=None):
     context["title"] = title
     return render(request, "encyclopedia/delete_entry.html", context)
 
-
+@login_required(login_url='account/login/')
 def notFound(request):
+    username = get_username(request)
     return render(request, "encyclopedia/notfound.html")
 
-
+@login_required(login_url='account/login/')
 def handler_404(request, exception):
+    username = get_username(request)
     return render(request, "encyclopedia/404.html")

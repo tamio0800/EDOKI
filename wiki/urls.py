@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("edoki/admin/", admin.site.urls),
     path("", include("encyclopedia.urls")),
+    path("edoki/account/", include("account.urls")),
 ]
 
 handler404 = "encyclopedia.views.handler_404"

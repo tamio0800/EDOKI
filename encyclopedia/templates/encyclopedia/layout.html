@@ -21,6 +21,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap" rel="stylesheet">
 	<link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet" />
 	<link href="{% static 'encyclopedia/404.css' %}" rel="stylesheet" />
+	<link rel="icon" href = "{% static 'website_pictures/edony_icon.png' %}">
 	{% block style %} {% endblock style %}
 </head>
 
@@ -74,10 +75,14 @@
 						</li>
 						<ul id="alt_nav_list" class="nav-list d-flex flex-row flex-md-column justify-content-around">
 							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'index' %}">首頁</a></li>
-							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'create_update' %}">新增條目</a>
-							</li>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'create_update' %}">新增條目</a></li>
 							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'random_entry' %}">隨便瞧瞧</a></li>
+							<li class="nav-item"><a class="nav-link text-primary"> </a></li>
+							<li class="nav-item"><a class="nav-link text-success" href="{% url 'admin:index' %}" style="color: green;">控制台</a></li>
 						</ul>
+						<br>
+						<a type="button" class="btn btn-secondary" href="{% url 'logout' %}">登出 {{username}}</a>
+						
 					</ul>
 			</nav>
 		</div>

@@ -1,10 +1,10 @@
 from django.urls import path, re_path
-
 from django.conf.urls import handler400, handler403, handler404, handler500
 from . import views
 
 urlpatterns = [
     path("edoki/", views.index, name="index"),
+    path("", views.index, name="index_nohead"),
     path("edoki/wiki/<str:title>/", views.wiki_entry, name="wiki_entry"),
     re_path(r"edoki/wiki/(?P<title>).*[\s\w]*/$", views.wiki_entry, name="wiki_entry"),
     re_path(
