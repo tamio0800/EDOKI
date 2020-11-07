@@ -53,7 +53,9 @@ def index(request):
     username = get_username(request)
     if request.META.get('PATH_INFO', None) == '/':
         return redirect('index')
+
     entry_list = util.list_entries()
+    entry_read_times_combined_list = list()
     if request.method == "POST":
         letter = request.POST.get("letter")
         search = request.POST.get("search")
@@ -76,7 +78,18 @@ def index(request):
             entry_list = list(
                 filter(lambda x: x.lower().startswith(letter), entry_list)
             )
-    context = {"entries": entry_list, 'username': username}
+
+    entry_read_times_combined_list = list()
+    for each_entry_title in entry_list:
+        read_times = entry_profile.objects.filter(title=each_entry_title).first().read_times
+        entry_read_times_combined_list.append(
+            {'entry':each_entry_title, 'read_times':'{:,}'.format(read_times)} 
+        )
+
+    context = {
+        "entries": entry_list, 
+        'username': username, 
+        'entry_read_times_combined_list': entry_read_times_combined_list}
     return render(request, "encyclopedia/index.html", context)
 
 @login_required(login_url='account/login/')

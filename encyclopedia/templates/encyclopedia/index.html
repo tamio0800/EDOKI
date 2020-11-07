@@ -58,14 +58,27 @@
 				alt="loading-spinner" class="d-block  w-25 mw-25 mh-25">
 		</div>
 		<div class="entry-content">
-			<h5 class="font-weight-bold">開放條目 -
+			<h5 class="font-weight-bold">所有條目 -
 				<span class="badge badge-secondary px-2">{{entries|length}}</s>
 			</h5>
-			<ul>
+			<!--<ul>
 				{% for entry in entries %}
 				<li class="p-1">
 					{# entry title and url #}
 					<a href="{% url 'wiki_entry' entry %}"> {{ entry }} </a>
+				</li>
+				{% empty %}
+				<li>
+					<h1 class="text-secondary text-centered "> 找不到條目唷:(</h1>
+				</li>
+				{% endfor %}
+			</ul>-->
+
+			<ul>
+				{% for entry_read_times in entry_read_times_combined_list %}
+				<li class="p-1">
+					<a href="{% url 'wiki_entry' entry_read_times.entry %}"> {{ entry_read_times.entry }} </a>
+					<a style="color:blueviolet; font-size: 15px;"> &nbsp;(閱讀次數:&nbsp;{{ entry_read_times.read_times }}) </a>
 				</li>
 				{% empty %}
 				<li>
